@@ -91,7 +91,7 @@ table = PrettyTable(["Degree", "Average Bias", "Average Bias Square", "Average V
 for i in range(0, 9):
     yMean = np.mean(yP[:,i*10+1:i*10+11], axis = 1)[: , np.newaxis]
     # bias_array = yP[:,i+1:i+11] - yMean
-    bias_array = yMean - yTest
+    bias_array = np.absolute(yMean - yTest)
     bias_list.append(round(np.mean(bias_array), 3))
     bias_square_list.append(round(np.mean((bias_array)**2), 3))
 
