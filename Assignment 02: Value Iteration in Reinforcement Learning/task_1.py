@@ -65,3 +65,20 @@ def print_transition_model():
 
 
 
+
+def value_iteration():
+    count = 0
+    U1 = dict([(s, 0) for s in states])
+    R, T, G = reward, transition_model, gamma
+    while True:
+        print("iteration="+str(count))
+        count = count + 1
+        U = U1.copy()
+        diff = 0
+        for s in states:
+            U1[s] = R[s] + G * max([sum([p * U[s1] for p, s1 in T[s][a]]) for a in range(0, 3)])
+            diff = max(diff, abs(U1[s] - U[s]))
+        if diff < delta * (1 - G) / G:
+            return U
+
+value_iteration()
