@@ -30,7 +30,10 @@ def find_prob(action, i, j):
         if abs(t2x - t1x) == 1:
             p = 0.15
     if t1x == t2x and t1y == t2y:
-        p = 0.40
+        if t1x == 1 and t1y == 1:
+            p = 0.55
+        else:
+            p = 0.40
 
     # Call status
     if i[2] == 0:
@@ -52,7 +55,9 @@ def find_prob(action, i, j):
             p *= 0.0
     elif action == 'up':
         if a1x == a2x:
-            if a2y - a1y == 1:
+            if a1x == 2 and a1y == a2y:
+                p *= px
+            elif a2y - a1y == 1:
                 p *= px
             elif a1y - a2y == 1:
                 p *= pox
@@ -60,7 +65,9 @@ def find_prob(action, i, j):
             p *= 0.0
     elif action == "down":
         if a1x == a2x:
-            if a1y - a2y == 1:
+            if a1x == 0 and a1y == a2y:
+                p *= px
+            elif a1y - a2y == 1:
                 p *= px
             elif a2y - a1y == 1:
                 p *= pox
@@ -68,7 +75,9 @@ def find_prob(action, i, j):
             p *= 0.0
     elif action == "left":
         if a1y == a2y:
-            if a1x - a2x == 1:
+            if a1y == 0 and a1x == a2x:
+                p *= px
+            elif a1x - a2x == 1:
                 p *= px
             elif a2x - a1x == 1:
                 p *= pox
@@ -76,7 +85,9 @@ def find_prob(action, i, j):
             p *= 0.0
     elif action == "right":
         if a1y == a2y:
-            if a2x - a1x == 1:
+            if a1x == 2 and a1y == a2y:
+                p *= px
+            elif a2x - a1x == 1:
                 p *= px
             elif a1x - a2x == 1:
                 p *= pox
