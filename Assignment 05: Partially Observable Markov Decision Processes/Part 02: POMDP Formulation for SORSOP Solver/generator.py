@@ -6,6 +6,7 @@ states = []
 transitions = []
 initial_belief = []
 observation_fn = []
+rewards = []
 
 # For determining the probability for the given transition
 def find_prob(action, i, j):  
@@ -144,7 +145,7 @@ for i in cells:
 for i in states:
     for j in states:
         for action in actions:
-                transitions.append("T: " + action + " : " + str(i) + " : " + str(j) + " " + str(find_prob(action, i, j)))
+                transitions.append("T: " + action + " : " + str(i).replace(' ', '') + " : " + str(j).replace(' ', '') + " " + str(find_prob(action, i, j)))
 
 # For generating the initial belief state
 for state in states:
@@ -160,11 +161,17 @@ for state in states:
 for action in actions:
     for state in states:
         for observation in observations:
-                observation_fn.append("O: " + action + " : " + str(state) + " : " + observation + " " + str(find_observation(action, state, observation)))
+                observation_fn.append("O: " + action + " : " + str(state).replace(' ', '') + " : " + observation + " " + str(find_observation(action, state, observation)))
 
 # Generating the rewards
 for action in actions:
     for si in states:
         for sj in states:
             for obs in observations:
-                print("R: " + action + " : " + str(si) + " : " +  str(sj) +  " : " + obs + " " + str(find_reward(action, si, sj, obs)))
+                rewards.append("R: " + action + " : " + str(si).replace(' ', '') + " : " +  str(sj).replace(' ', '') +  " : " + obs + " " + str(find_reward(action, si, sj, obs)))
+
+# Generate the parameters by changing the X.append to print and execute the following commands for getting each paramters in separate files.
+# python3 generator.py > states.txt
+# python3 generator.py > transition.txt
+# python3 generator.py > observations.txt
+# python3 generator.py > rewards.txt
