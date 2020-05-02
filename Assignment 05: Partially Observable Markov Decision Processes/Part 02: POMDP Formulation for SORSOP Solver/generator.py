@@ -102,15 +102,15 @@ def find_prob(action, i, j):
 def find_observation(action, state, obs):
     if state[0] == state[1] and obs == 'o1':
         return 1.0
-    if state[0][1] == state[1][1] and state[1][0] - state[0][0] == 1 and obs == 'o2':
+    elif state[0][1] == state[1][1] and state[1][0] - state[0][0] == 1 and obs == 'o2':
         return 1.0
-    if state[0][0] == state[1][0] and state[0][1] - state[1][1] == 1 and obs == 'o3':
+    elif state[0][0] == state[1][0] and state[0][1] - state[1][1] == 1 and obs == 'o3':
         return 1.0
-    if state[0][1] == state[1][1] and state[0][0] - state[1][0] == 1 and obs == 'o4':
+    elif state[0][1] == state[1][1] and state[0][0] - state[1][0] == 1 and obs == 'o4':
         return 1.0
-    if state[0][0] == state[1][0] and state[1][1] - state[0][1] == 1 and obs == 'o5':
+    elif state[0][0] == state[1][0] and state[1][1] - state[0][1] == 1 and obs == 'o5':
         return 1.0
-    if state[0][1] == state[1][1] and abs(state[0][0] - state[1][0]) == 1 or state[0][0] == state[1][0] and abs(state[0][1] - state[1][1]) == 1 or state[0][1] == state[1][1] and state[0][0] == state[1][0]:
+    elif obs == 'o6':
         return 1.0
 
     return 0.0
@@ -147,3 +147,5 @@ for action in actions:
     for state in states:
         for observation in observations:
                 print("O: " + action + " : " + str(state) + " : " + observation + " " + str(find_observation(action, state, observation)))
+
+# Generating the rewards
