@@ -115,6 +115,20 @@ def find_observation(action, state, obs):
 
     return 0.0
 
+# For determining the rewards
+def find_reward(action, si, sj, obs):
+    if find_prob(action, si, sj) != 0.0:
+        if action == 'stay' and si[1] == sj[1]:
+            return 0
+        elif action  == 'stay' and sj[0] == sj[1] and sj[2] ==1:
+            return 30
+        elif sj[0] == sj[1] and sj[2] == 1:
+            return -1  + 30
+        else:
+            return -1
+    else:
+        return 0
+
 # For generating all the cells of the matrix
 for i in range(0,3):
     for j in range(0, 3):
@@ -146,6 +160,11 @@ for state in states:
 for action in actions:
     for state in states:
         for observation in observations:
-                print("O: " + action + " : " + str(state) + " : " + observation + " " + str(find_observation(action, state, observation)))
+                observation_fn.append("O: " + action + " : " + str(state) + " : " + observation + " " + str(find_observation(action, state, observation)))
 
 # Generating the rewards
+for action in actions:
+    for si in states:
+        for sj in states:
+            for obs in observations:
+                print("R: " + action + " : " + str(si) + " : " +  str(sj) +  " : " + obs + " " + str(find_reward(action, si, sj, obs)))
