@@ -1,9 +1,11 @@
 # Initializing basic parameters for POMDP
 actions = ['stay', 'up', 'down', 'left', 'right']
+observations = ['o1', 'o2', 'o3', 'o4', 'o5', 'o6']
 cells = []
 states = []
 transitions = []
 initial_belief = []
+observation_fn = []
 
 # For determining the probability for the given transition
 def find_prob(action, i, j):  
@@ -94,7 +96,24 @@ def find_prob(action, i, j):
         else:
             p *= 0.0
 
-    return p       
+    return p    
+
+# For determining the observational probabilities
+def find_observation(action, state, obs):
+    if state[0] == state[1] and obs == 'o1':
+        return 1.0
+    if state[0][1] == state[1][1] and state[1][0] - state[0][0] == 1 and obs == 'o2':
+        return 1.0
+    if state[0][0] == state[1][0] and state[0][1] - state[1][1] == 1 and obs == 'o3':
+        return 1.0
+    if state[0][1] == state[1][1] and state[0][0] - state[1][0] == 1 and obs == 'o4':
+        return 1.0
+    if state[0][0] == state[1][0] and state[1][1] - state[0][1] == 1 and obs == 'o5':
+        return 1.0
+    if state[0][1] == state[1][1] and abs(state[0][0] - state[1][0]) == 1 or state[0][0] == state[1][0] and abs(state[0][1] - state[1][1]) == 1 or state[0][1] == state[1][1] and state[0][0] == state[1][0]:
+        return 1.0
+
+    return 0.0
 
 # For generating all the cells of the matrix
 for i in range(0,3):
@@ -111,7 +130,7 @@ for i in cells:
 for i in states:
     for j in states:
         for action in actions:
-                print("T: " + action + " : " + str(i) + " : " + str(j) + " " + str(find_prob(action, i, j)))
+                transitions.append("T: " + action + " : " + str(i) + " : " + str(j) + " " + str(find_prob(action, i, j)))
 
 # For generating the initial belief state
 for state in states:
@@ -122,3 +141,9 @@ for state in states:
             initial_belief.append("0.0")
     else:
         initial_belief.append("0.0")
+
+# For generating the observation probabilities
+for action in actions:
+    for state in states:
+        for observation in observations:
+                print("O: " + action + " : " + str(state) + " : " + observation + " " + str(find_observation(action, state, observation)))
